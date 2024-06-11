@@ -1,0 +1,27 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: db-init-job
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  template:
+    spec:
+      serviceAccountName: dbinit
+      initContainers:
+      - name: wait-for-db
+        image: busybox:1.28
+        command: ['sh', '-c', 'until nc -z -v -w30 $POSTGRESQL_DATABASE 5432; do echo "Waiting for database connection..."; sleep 2; done;']
+        env:
+        - name: POSTGRESQL_DATABASE
+          value: postgresql.ic-shared-db.svc.cluster.local
+      containers:
+      - name: oc
+        image: registry.redhat.io/openshift4/ose-cli:latest
+        command: ["/bin/bash", "-c"]
+        args:
+        - |
+          echo "Running SQL script"
+          oc rsh svc/postgresql psql -d vectordb -c "CREATE EXTENSION vector;"
+      restartPolicy: Never
+  backoffLimit: 4
