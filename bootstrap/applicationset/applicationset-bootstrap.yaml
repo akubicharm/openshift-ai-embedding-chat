@@ -21,12 +21,7 @@ spec:
         name: ic-shared-llm-app
         repoURL: https://github.com/akubicharm/openshift-ai-embedding-chat.git
         targetRevision: main
-        path: bootstrap/ic-shared-llm
-      - cluster: in-cluster
-        name: ic-shared-chat-app
-        repoURL: https://github.com/akubicharm/openshift-ai-embedding-chat.git
-        targetRevision: main
-        path: app/deployment       
+        path: bootstrap/ic-shared-llm    
   template:
     metadata:
       name: '{{name}}'
