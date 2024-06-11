@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gradio-hftgi-rag-pgvector
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: chatapp
+  project: default
+  source:
+    path: app/deployment
+    repoURL: https://github.com/akubicharm/openshift-ai-embedding-chat.git
+    targetRevision: main
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false
+    syncOptions: [CreateNamespace=false]
