@@ -16,4 +16,5 @@ resources:
 - deployment.yaml
 - service.yaml
 # wave 2
+- db-init-role.yaml
 - db-init-job.yaml
