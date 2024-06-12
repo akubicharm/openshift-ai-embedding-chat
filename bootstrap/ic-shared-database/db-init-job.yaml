@@ -2,6 +2,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: db-init-job
+  namespace: ic-shared-db  
   annotations:
     argocd.argoproj.io/sync-wave: "2"
 spec:

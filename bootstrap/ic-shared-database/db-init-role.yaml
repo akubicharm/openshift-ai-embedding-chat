@@ -4,6 +4,12 @@ kind: ServiceAccount
 metadata:
   name: dbinit
   namespace: ic-shared-db
+  labels:
+    app: ic-shared-db
+    argocd.argoproj.io/managed-by: openshift-gitops
+  annotations:
+    openshift.io/display-name: "Shared PostgreSQL Database"
+    argocd.argoproj.io/sync-wave: "2"  
 
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -11,6 +17,12 @@ kind: Role
 metadata:
   namespace: ic-shared-db
   name: dbinit-role
+  labels:
+    app: ic-shared-db
+    argocd.argoproj.io/managed-by: openshift-gitops
+  annotations:
+    openshift.io/display-name: "Shared PostgreSQL Database"
+    argocd.argoproj.io/sync-wave: "2"  
 rules:
 - apiGroups: [""] # "" はコアのAPIグループを示します
   resources: ["services", "pods", "pods/exec"]
@@ -22,6 +34,12 @@ kind: RoleBinding
 metadata:
   name: dbinit-rolebinding
   namespace: ic-shared-db
+  labels:
+    app: ic-shared-db
+    argocd.argoproj.io/managed-by: openshift-gitops
+  annotations:
+    openshift.io/display-name: "Shared PostgreSQL Database"
+    argocd.argoproj.io/sync-wave: "2"  
 subjects:
 - kind: ServiceAccount
   name: dbinit
